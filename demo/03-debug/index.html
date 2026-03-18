@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Buggy Dashboard - Debug Demo</title>
+  <style>
+    body { font-family: sans-serif; background: #f5f5f5; color: #333; max-width: 800px; margin: 0 auto; padding: 24px; }
+    h1 { margin-bottom: 16px; }
+    .card { background: #fff; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+    .card h2 { font-size: 16px; margin-bottom: 8px; color: #555; }
+    .error-banner { background: #fee; border: 1px solid #fcc; color: #c00; padding: 12px; border-radius: 6px; margin-bottom: 16px; }
+    .warn-banner { background: #fff3e0; border: 1px solid #ffe0b2; color: #e65100; padding: 12px; border-radius: 6px; margin-bottom: 16px; }
+    ul { list-style: none; padding: 0; }
+    ul li { padding: 6px 0; border-bottom: 1px solid #eee; }
+    button { background: #06f; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; margin: 4px; }
+  </style>
+</head>
+<body>
+  <h1>Team Dashboard</h1>
+
+  <!-- Visible error: component render failure -->
+  <div class="error-banner">
+    Component Error: Cannot read properties of null (reading 'department') — in UserList for "Charlie Ruiz"
+  </div>
+
+  <!-- Deprecation warning visible in UI -->
+  <div class="warn-banner">
+    Warning: /api/v1/users is deprecated. Migrate to /api/v2/users by December 2026.
+  </div>
+
+  <div class="card">
+    <h2>Metrics</h2>
+    <p>Active Users: <strong>847</strong> today</p>
+    <p>API Latency: <strong>142ms</strong> p95</p>
+    <p>Error Rate: <strong id="error-rate">3.2%</strong> (above threshold!)</p>
+  </div>
+
+  <div class="card">
+    <h2>Active Users</h2>
+    <ul id="user-list">
+      <li>Alice Chen - ENGINEERING</li>
+      <li>Bob Park - DESIGN</li>
+      <li>Charlie Ruiz - [ERROR: could not render]</li>
+      <li>Diana Kim - PRODUCT</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Actions</h2>
+    <button id="btn-refresh">Refresh Data</button>
+    <button id="btn-export">Export CSV</button>
+    <p id="action-status">Status: idle</p>
+  </div>
+
+  <div class="card">
+    <h2>System Health</h2>
+    <p>Database: <strong style="color:#0c0">Connected</strong></p>
+    <p>Cache: <strong style="color:#0c0">Hit rate 94%</strong></p>
+    <p>Queue: <strong style="color:#f80">23 pending jobs</strong></p>
+    <p>Metrics API: <strong style="color:#c00">Unreachable</strong></p>
+  </div>
+
+  <div class="card">
+    <h2>Recent Logs</h2>
+    <pre id="log-output">Loading logs...</pre>
+  </div>
+</body>
+</html>

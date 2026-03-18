@@ -1,0 +1,15 @@
+{
+  "name": "pandabridge-demos",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Pandabridge feature demos — scraping, inspection, debugging, a11y, forms",
+  "scripts": {
+    "demo:scrape": "node 01-scrape/scrape-demo.js",
+    "demo:inspect": "node 02-inspect/inspect-demo.js",
+    "demo:debug": "node 03-debug/debug-demo.js",
+    "demo:a11y": "node 04-accessibility/a11y-demo.js",
+    "demo:forms": "node 05-forms/forms-demo.js",
+    "demo:all": "npm run demo:scrape && npm run demo:inspect && npm run demo:debug && npm run demo:a11y && npm run demo:forms"
+  }
+}

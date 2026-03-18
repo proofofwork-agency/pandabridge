@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Company Profile Page</title>
+  <style>
+    body { font-family: sans-serif; max-width: 800px; margin: 0 auto; padding: 24px; color: #333; }
+    .hero { background: #e8f0fe; padding: 32px; border-radius: 8px; margin-bottom: 24px; }
+    .section { margin-bottom: 24px; }
+    button { padding: 8px 16px; margin: 4px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <!-- Issue: no landmark roles (no <main>, <nav>, <header>) -->
+
+  <h1>Acme Corp</h1>
+
+  <div class="hero">
+    <!-- Issue: img without alt attribute -->
+    <img src="/logo.png" width="200" height="60">
+    <p>Building the future of widgets since 1999.</p>
+  </div>
+
+  <!-- Issue: heading hierarchy skip — h1 directly to h4 -->
+  <h4>Our Services</h4>
+  <div class="section">
+    <p>We offer consulting, development, and support.</p>
+  </div>
+
+  <h4>Contact Us</h4>
+  <div class="section">
+    <!-- Issue: form without fieldset/legend -->
+    <form>
+      <!-- Issue: input without label or aria-label -->
+      <input type="text" placeholder="Your name">
+      <br><br>
+      <input type="email" placeholder="Your email">
+      <br><br>
+      <textarea placeholder="Message" rows="4" cols="40"></textarea>
+      <br><br>
+      <!-- Issue: button with no accessible name -->
+      <button type="submit"></button>
+    </form>
+  </div>
+
+  <div class="section">
+    <h4>Quick Links</h4>
+    <ul>
+      <li><a href="/about">About</a></li>
+      <li><a href="/careers">Careers</a></li>
+      <li><a href="/blog">Blog</a></li>
+    </ul>
+  </div>
+</body>
+</html>

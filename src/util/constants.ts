@@ -1,0 +1,5 @@
+export const CDP_CONNECT_TIMEOUT_MS = 30_000;
+export const CDP_STARTUP_MAX_ATTEMPTS = 20;
+export const CDP_STARTUP_DELAY_MS = 500;
+export const ACTION_SETTLE_TIMEOUT_MS = 1_500;
+export const REPORT_SECTION_MAX_ITEMS = 10;

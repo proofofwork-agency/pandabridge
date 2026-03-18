@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact Form</title>
+  <style>
+    body { font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; color: #333; }
+    h1 { margin-bottom: 8px; }
+    p.subtitle { color: #666; margin-bottom: 24px; }
+    label { display: block; font-weight: bold; margin-bottom: 4px; margin-top: 16px; }
+    input, select, textarea { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; box-sizing: border-box; }
+    textarea { resize: vertical; }
+    button[type="submit"] { margin-top: 20px; background: #06f; color: #fff; border: none; padding: 10px 24px; border-radius: 4px; cursor: pointer; font-size: 16px; }
+  </style>
+</head>
+<body>
+  <h1>Contact Us</h1>
+  <p class="subtitle">Fill out the form below and we'll get back to you.</p>
+
+  <form method="POST" action="/submit">
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name" placeholder="Your full name">
+
+    <label for="email">Email</label>
+    <input type="text" id="email" name="email" placeholder="you@example.com">
+
+    <label for="category">Category</label>
+    <select id="category" name="category">
+      <option value="">Select a category...</option>
+      <option value="general">General Inquiry</option>
+      <option value="support">Technical Support</option>
+      <option value="billing">Billing</option>
+      <option value="feedback">Feedback</option>
+    </select>
+
+    <label for="message">Message</label>
+    <textarea id="message" name="message" rows="5" placeholder="How can we help?"></textarea>
+
+    <button type="submit" id="submit-btn">Send Message</button>
+  </form>
+</body>
+</html>

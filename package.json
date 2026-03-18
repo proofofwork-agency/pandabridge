@@ -1,0 +1,54 @@
+{
+  "name": "pandabridge",
+  "version": "0.5.0",
+  "description": "Fast web research & scraping MCP server for AI agents, powered by Lightpanda",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "pandabridge": "./bin/pandabridge.js"
+  },
+  "files": ["dist", "bin", "CHANGELOG.md"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/proofofworks/pandabridge.git"
+  },
+  "homepage": "https://github.com/proofofworks/pandabridge#readme",
+  "bugs": {
+    "url": "https://github.com/proofofworks/pandabridge/issues"
+  },
+  "keywords": ["mcp", "browser", "lightpanda", "cdp", "headless", "scraping", "web-research", "content-extraction", "batch", "claude", "model-context-protocol"],
+  "engines": {
+    "node": ">=18"
+  },
+  "author": "ProofOfWork / Danillo Felix <danillo@proofofwork.agency>",
+  "license": "MIT",
+  "scripts": {
+    "clean": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\"",
+    "build": "npm run clean && tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts",
+    "setup-hooks": "bash hooks/install.sh",
+    "test": "tsx --test src/*.test.ts src/**/*.test.ts",
+    "test:smoke": "node scripts/smoke-test.js",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "playwright-core": "^1.50.0",
+    "turndown": "^7.2.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/turndown": "^5.0.5",
+    "tsx": "^4.0.0",
+    "typescript": "^5.7.0"
+  }
+}

@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.claude
+.tmp
+CLAUDE.md
+skills-lock.json
+*.tsbuildinfo
+*.js.map
+.DS_Store
+*.log
