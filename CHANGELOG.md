@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.2] - 2026-03-18
+
+### Fixed
+- All tools now auto-recover from Lightpanda crashes — `ensurePage()` (the shared page-acquisition function used by every tool) now calls `reconnectFresh` instead of `connectAndSetup`, ensuring Lightpanda is restarted when it exits mid-session. Previously, only explicit reconnects via `scrape_page`/`browser_navigate` would restart the process; other tools would fail with connection errors.
+
 ## [0.5.1] - 2026-03-18
 
 ### Fixed

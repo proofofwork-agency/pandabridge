@@ -163,11 +163,12 @@ export async function ensurePage(): Promise<Page> {
     }
   }
 
-  // Attempt reconnection via dynamic imports to avoid circular deps
+  // Attempt reconnection via dynamic imports to avoid circular deps.
+  // Use reconnectFresh (not connectAndSetup) so Lightpanda is restarted if it crashed.
   if (!reconnecting) {
     reconnecting = (async () => {
-      const { connectAndSetup } = await import('./connection.js');
-      await connectAndSetup(getConfig());
+      const { reconnectFresh } = await import('./connection.js');
+      await reconnectFresh(getConfig());
     })();
   }
 
