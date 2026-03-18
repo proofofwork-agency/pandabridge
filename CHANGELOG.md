@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.5.1] - 2026-03-18
+
+### Fixed
+- Lightpanda mid-session crash recovery — if Lightpanda exits during a session, `reconnectFresh` now automatically restarts the managed process and waits for CDP readiness before reconnecting, instead of failing permanently with `ECONNREFUSED`
+- `killLightpanda` now resets managed binary state, preventing phantom restart attempts after deliberate shutdown
+
+### Added
+- Auto-detection of `lightpanda` in system PATH when `LIGHTPANDA_BINARY` is not set
+- Restart failure errors now include context (`"Lightpanda restart failed: ..."`) for clearer debugging
+
+### Internal
+- Extracted `spawnLightpanda(binaryPath, config)` helper to eliminate duplication between startup and restart paths
+- Added unit tests for `restartLightpandaIfNeeded` guard clauses (141 total tests)
+
 ## [0.5.0] - 2026-03-18
 
 **Initial public release.** Pandabridge is stable and ready for production use. All core browser automation, scraping, and MCP protocol features are production-tested and documented.

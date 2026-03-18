@@ -4,6 +4,7 @@ import type { Config } from '../config.js';
 import { log, logCritical } from '../log.js';
 import { toErrorMessage, toError } from '../util/errors.js';
 import { CDP_CONNECT_TIMEOUT_MS } from '../util/constants.js';
+import { restartLightpandaIfNeeded } from './lifecycle.js';
 import {
   getBrowser,
   setBrowser,
@@ -48,6 +49,7 @@ export async function reconnectFresh(config: Config): Promise<void> {
   setContext(null);
   setBrowser(null);
 
+  await restartLightpandaIfNeeded(config);
   await connectAndSetup(config);
 }
 
