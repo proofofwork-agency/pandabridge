@@ -5,7 +5,7 @@
 ██╔═══╝ ██╔══██║██║╚██╗██║██║  ██║██╔══██║██╔══██╗██╔══██╗██║██║  ██║██║   ██║██╔══╝
 ██║     ██║  ██║██║ ╚████║██████╔╝██║  ██║██████╔╝██║  ██║██║██████╔╝╚██████╔╝███████╗
 ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝╚═════╝  ╚═════╝ ╚══════╝
-                                  proofofwork
+                              proofofwork-agency
 ```
 
 # Pandabridge
@@ -112,13 +112,13 @@ Pandabridge saves an estimated ~40% tool overhead on common agent workflows. The
 ### Install
 
 ```bash
-npm install -g pandabridge
+npm install -g @proofofwork-agency/pandabridge
 ```
 
 Or from source:
 
 ```bash
-git clone https://github.com/proofofworks/pandabridge.git
+git clone https://github.com/proofofwork-agency/pandabridge.git
 cd pandabridge
 npm install
 npm run build
@@ -130,7 +130,7 @@ Local Lightpanda:
 
 ```bash
 lightpanda serve --host 127.0.0.1 --port 9222
-claude mcp add pandabridge pandabridge
+claude mcp add pandabridge @proofofwork-agency/pandabridge
 ```
 
 From source:
@@ -143,7 +143,7 @@ Lightpanda Cloud / remote CDP:
 
 ```bash
 export LIGHTPANDA_CDP_WS_URL=wss://your-instance.lightpanda.cloud
-claude mcp add pandabridge pandabridge
+claude mcp add pandabridge @proofofwork-agency/pandabridge
 ```
 
 Then ask Claude things like:

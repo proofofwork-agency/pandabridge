@@ -86,7 +86,8 @@ export function registerScrapePage(server: McpServer): void {
           // best-effort
         }
 
-        const title = await activePage.title();
+        let title = '';
+        try { title = await activePage.title(); } catch { /* context may be destroyed by client-side redirect */ }
         const html = await activePage.innerHTML('body');
         const md = turndown.turndown(html);
 

@@ -71,7 +71,8 @@ export function registerBrowserStatus(server: McpServer): void {
         }
 
         const url = page.url();
-        const title = await page.title();
+        let title = '';
+        try { title = await page.title(); } catch { /* context may be destroyed */ }
         const text = formatToolResponse(
           `Status: connected\nCDP endpoint: ${config.cdpEndpoint}\nURL: ${url}\nTitle: ${title}`,
           config

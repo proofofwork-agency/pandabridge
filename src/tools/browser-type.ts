@@ -5,7 +5,7 @@ import { getConfig } from '../config.js';
 import { formatToolResponse } from '../util/output.js';
 import { resolveElementTarget } from '../util/element-target.js';
 import { waitForSettle } from '../util/action-settle.js';
-import { inspectDomTarget } from '../util/dom-target.js';
+import { inspectDomTarget, downgradeFragileInputType } from '../util/dom-target.js';
 import { toErrorMessage } from '../util/errors.js';
 import { ACTION_SETTLE_TIMEOUT_MS } from '../util/constants.js';
 
@@ -47,6 +47,8 @@ export function registerBrowserType(server: McpServer): void {
             `Element ${target.label} is <${domTarget.tagName ?? 'unknown'}>; browser_type only supports input, textarea, or contenteditable elements.`
           );
         }
+
+        await downgradeFragileInputType(page, target.selector, domTarget);
 
         await page.fill(target.selector, value, { timeout: config.defaultTimeout });
         await waitForSettle(page, Math.min(config.defaultTimeout, ACTION_SETTLE_TIMEOUT_MS));

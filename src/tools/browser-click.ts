@@ -5,6 +5,7 @@ import { getConfig } from '../config.js';
 import { formatToolResponse } from '../util/output.js';
 import { checkDomain } from '../util/domain-filter.js';
 import { resolveElementTarget } from '../util/element-target.js';
+import { inspectDomTarget, downgradeFragileInputType } from '../util/dom-target.js';
 import { log } from '../log.js';
 import { toErrorMessage } from '../util/errors.js';
 import { createReconnectFresh } from '../util/reconnect.js';
@@ -33,6 +34,16 @@ export function registerBrowserClick(server: McpServer): void {
         const config = getConfig();
         const page = await ensurePage();
         const target = resolveElementTarget(page.url(), selector, elementId);
+
+        // Downgrade fragile HTML5 input types before clicking to prevent
+        // Lightpanda crashes when focus triggers validation-related JS.
+        try {
+          const domTarget = await inspectDomTarget(page, target.selector);
+          if (domTarget.exists) {
+            await downgradeFragileInputType(page, target.selector, domTarget);
+          }
+        } catch { /* best-effort — don't block click if inspect fails */ }
+
         const waitMode = waitUntil ?? 'domcontentloaded';
 
         // Not every click triggers a navigation (e.g. toggles, modals, SPAs),
@@ -61,7 +72,8 @@ export function registerBrowserClick(server: McpServer): void {
           return { content: [{ type: 'text', text: `Navigation after click was blocked: ${domainError}. Returned to previous page.` }], isError: true };
         }
 
-        const title = await page.title();
+        let title = '';
+        try { title = await page.title(); } catch { /* context may be destroyed by client-side redirect */ }
         const text = formatToolResponse(`Clicked: ${target.label}\nPage title: ${title}`, config, page.url());
         return { content: [{ type: 'text', text }] };
       } catch (err) {

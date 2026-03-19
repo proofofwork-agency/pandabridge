@@ -24,7 +24,8 @@ export function registerBrowserSnapshot(server: McpServer): void {
         const sel = selector ?? 'body';
 
         const content = await page.innerText(sel);
-        const title = await page.title();
+        let title = '';
+        try { title = await page.title(); } catch { /* context may be destroyed by client-side redirect */ }
         const url = page.url();
 
         // Collapse excessive whitespace

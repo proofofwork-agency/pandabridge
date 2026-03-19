@@ -236,6 +236,51 @@ describe('browser_debug_report', () => {
     setBrowser(null);
   });
 
+  test('downgrades fragile input types before filling in type actions', async () => {
+    const downgradeCalls: any[] = [];
+    let fillCalled = false;
+
+    const fakePage = createFakePage();
+    const origEvaluate = fakePage.evaluate;
+    fakePage.evaluate = async (fn: any, arg?: any) => {
+      const fnStr = typeof fn === 'function' ? fn.toString() : '';
+      // inspectDomTarget — returns info about the element
+      if (typeof arg === 'string') {
+        return { exists: true, tagName: 'input', inputType: 'email', isContentEditable: false, disabled: false };
+      }
+      // downgradeFragileInputType — arg is [selector, inputType]
+      if (Array.isArray(arg) && arg.length === 2 && typeof arg[1] === 'string') {
+        downgradeCalls.push({ arg });
+        return;
+      }
+      // injectErrorInstrumentation and others
+      return origEvaluate(fn, arg);
+    };
+    fakePage.fill = async () => { fillCalled = true; };
+
+    setPage(fakePage);
+    setBrowser({} as any);
+
+    const { server, getHandler } = createFakeServer();
+    registerBrowserDebugReport(server as any);
+
+    const result = await getHandler()({
+      url: 'http://example.com',
+      actions: [
+        { type: 'type', selector: 'input[name="email"]', value: 'test@example.com' },
+      ],
+    });
+    const text = result.content[0].text;
+
+    assert.equal(fillCalled, true, 'fill should be called after downgrade');
+    assert.equal(downgradeCalls.length, 1, 'downgrade evaluate should have been called');
+    assert.deepEqual(downgradeCalls[0].arg, ['input[name="email"]', 'email']);
+    assert.ok(text.includes('OK') || text.includes('type input[name="email"]'));
+
+    setPage(null);
+    setBrowser(null);
+  });
+
   test('blocks redirects to restricted domains', async () => {
     const config = getConfig();
     setConfig({ ...config, defaultTimeout: 1000, domainBlocklist: ['blocked.com'] });

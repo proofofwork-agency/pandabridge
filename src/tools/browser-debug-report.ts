@@ -16,7 +16,7 @@ import { formatToolResponse } from '../util/output.js';
 import { checkDomain } from '../util/domain-filter.js';
 import { injectErrorInstrumentation } from '../browser/instrumentation.js';
 import { waitForSettle } from '../util/action-settle.js';
-import { inspectDomTarget } from '../util/dom-target.js';
+import { inspectDomTarget, downgradeFragileInputType } from '../util/dom-target.js';
 import { getPostNavigationDomainError } from '../util/post-navigation-domain.js';
 import { toErrorMessage } from '../util/errors.js';
 import { log } from '../log.js';
@@ -31,7 +31,7 @@ function isBadRequest(n: NetworkEntry): boolean {
   return !!(n.failed || (n.status !== undefined && n.status >= 400));
 }
 
-async function validateActionTarget(
+async function validateAndPrepareActionTarget(
   page: Awaited<ReturnType<typeof ensurePage>>,
   action: z.infer<typeof ActionSchema>
 ): Promise<string | null> {
@@ -59,6 +59,10 @@ async function validateActionTarget(
   }
   if (action.type === 'select' && domTarget.tagName !== 'select') {
     return `Element ${action.selector} is <${domTarget.tagName ?? 'unknown'}>; browser_select_option only supports <select> elements.`;
+  }
+
+  if (action.type === 'type') {
+    await downgradeFragileInputType(page, action.selector, domTarget);
   }
 
   return null;
@@ -152,7 +156,7 @@ export function registerBrowserDebugReport(server: McpServer): void {
 
             let actionError: string | null = null;
             try {
-              actionError = await validateActionTarget(page, action);
+              actionError = await validateAndPrepareActionTarget(page, action);
               if (actionError) {
                 throw new Error(actionError);
               }

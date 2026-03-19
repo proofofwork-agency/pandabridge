@@ -1,6 +1,6 @@
 {
-  "name": "pandabridge",
-  "version": "0.5.2",
+  "name": "@proofofwork-agency/pandabridge",
+  "version": "0.6.0",
   "description": "Fast web research & scraping MCP server for AI agents, powered by Lightpanda",
   "type": "module",
   "main": "dist/index.js",
@@ -17,11 +17,11 @@
   "files": ["dist", "bin", "CHANGELOG.md"],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/proofofworks/pandabridge.git"
+    "url": "git+https://github.com/proofofwork-agency/pandabridge.git"
   },
-  "homepage": "https://github.com/proofofworks/pandabridge#readme",
+  "homepage": "https://github.com/proofofwork-agency/pandabridge#readme",
   "bugs": {
-    "url": "https://github.com/proofofworks/pandabridge/issues"
+    "url": "https://github.com/proofofwork-agency/pandabridge/issues"
   },
   "keywords": ["mcp", "browser", "lightpanda", "cdp", "headless", "scraping", "web-research", "content-extraction", "batch", "claude", "model-context-protocol"],
   "engines": {
@@ -29,6 +29,9 @@
   },
   "author": "ProofOfWork / Danillo Felix <danillo@proofofwork.agency>",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "clean": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\"",
     "build": "npm run clean && tsc",

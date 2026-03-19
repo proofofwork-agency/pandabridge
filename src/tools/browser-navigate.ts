@@ -33,7 +33,8 @@ async function navigateOnce(
   const page = await navigateDeps.ensurePage();
   const response = await page.goto(url, { waitUntil: 'domcontentloaded', timeout });
   setNavigated(true);
-  const title = await page.title();
+  let title = '';
+  try { title = await page.title(); } catch { /* context may be destroyed by client-side redirect */ }
   return {
     page,
     status: response?.status() ?? 0,

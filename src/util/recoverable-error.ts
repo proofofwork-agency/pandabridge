@@ -5,6 +5,7 @@ export function isRecoverableNavigationError(error: Error): boolean {
     message.includes('browser has been closed') ||
     message.includes('connection closed') ||
     message.includes('target closed') ||
+    message.includes('execution context was destroyed') ||
     message.includes('econnrefused')
   );
 }

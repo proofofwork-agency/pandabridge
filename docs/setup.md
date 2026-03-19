@@ -11,7 +11,7 @@
 ### 1. Clone and build
 
 ```bash
-git clone https://github.com/proofofworks/pandabridge.git
+git clone https://github.com/proofofwork-agency/pandabridge.git
 cd pandabridge
 npm install
 npm run build
